@@ -54,6 +54,23 @@ Devices can be automatically bound to `vfio-pci` on boot using the supplied `25-
 3. Edit `/etc/udev/rules.d/25-vfio-pci-bind.rules` and add PCI device matching rules following the examples in the file.
 4. Reboot.
 
+## set-bind.sh
+
+This script will discover NVIDIA product (VendorID : 10de) and create automatically binding script
+
+Test on Centos 7, Rocky 8.6
+
+1. Copy set-bind.sh, vfio-pci-bind.sh, 25-vfio-pci-bind.rules.empty in same directory
+2. Make set-bind.sh executable and run.
+
+## Clean up
+
+Remove under files
+1. /etc/udev/rules.d/25-vfio-pci-bind.rules
+2. /lib/udev/vfio-pci-bind.sh
+3. /etc/modprobe.d/vfio.conf
+4. /etc/modules-load.d/vfio-pci.conf
+
 ## License
 
 See supplied LICENSE file.
