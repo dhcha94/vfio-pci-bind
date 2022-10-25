@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # -*- coding: utf-8 -*-
 #
 # =============================================================================
@@ -89,7 +89,7 @@ done
 
 # BDF not provided, find BDF for Vendor:Device
 if [[ -z $BDF ]]; then
-    COUNT=$(lspci -n -d ${VD} 2>/dev/null | wc -l)
+    COUNT=$(/lib/udev/lspci -n -d ${VD} 2>/dev/null | wc -l)
     if [[ $COUNT -eq 0 ]]; then
         echo "Error: Vendor:Device ${VD} not found" 1>&2
         exit 1
@@ -97,7 +97,7 @@ if [[ -z $BDF ]]; then
         echo "Error: Multiple results for Vendor:Device ${VD}, please provide Domain:Bus:Device.Function (dddd:bb:dd.f) as well" 1>&2
         exit 1
     fi
-    BDF=$(lspci -n -d ${VD} 2>/dev/null | cut -d " " -f1)
+    BDF=$(/lib/udev/lspci -n -d ${VD} 2>/dev/null | cut -d " " -f1)
     if [[ $BDF =~ $BDF_REGEX ]]; then
         BDF="0000:${BDF}"
     elif [[ ! $BDF =~ $DBDF_REGEX ]]; then
@@ -120,7 +120,7 @@ fi
 
 # validate that the correct Vendor:Device was found for this BDF
 if [[ ! -z $VD ]]; then
-    if [[ $(lspci -n -s ${BDF} -d ${VD} 2>/dev/null | wc -l) -eq 0 ]]; then
+    if [[ $(/lib/udev/lspci -n -s ${BDF} -d ${VD} 2>/dev/null | wc -l) -eq 0 ]]; then
         echo "Error: Vendor:Device ${VD} not found at ${BDF}, unable to bind device" 1>&2
         exit 1
     else
@@ -134,7 +134,7 @@ unset dev_sysfs_paths
 for dsp in $TARGET_DEV_SYSFS_PATH/iommu_group/devices/*
 do
     dbdf=${dsp##*/}
-    if [[ $(( 0x$(setpci -s $dbdf 0e.b) & 0x7f )) -eq 0 ]]; then
+    if [[ $(( 0x$(/lib/udev/setpci -s $dbdf 0e.b) & 0x7f )) -eq 0 ]]; then
         dev_sysfs_paths+=( $dsp )
     fi
 done
@@ -142,7 +142,7 @@ done
 printf "\nIOMMU group members (sans bridges):\n"
 for dsp in ${dev_sysfs_paths[@]}; do echo $dsp; done
 
-modprobe -i vfio-pci
+/lib/udev/modprobe -i vfio-pci
 if [[ $? -ne 0 ]]; then
     echo "Error: Error probing vfio-pci" 1>&2
     exit 1

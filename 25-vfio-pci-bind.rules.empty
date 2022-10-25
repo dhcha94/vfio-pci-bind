@@ -18,7 +18,7 @@ SUBSYSTEM!="pci", GOTO="vfio_pci_bind_rules_end"
 #  KERNEL=="0000:0b:00.0", TAG="vfio-pci-bind"
 #
 
-
+#changehere
 # Any device tagged by a rule above is bound to vfio-pci.
 #
 TAG=="vfio-pci-bind", RUN+="vfio-pci-bind.sh $kernel"
