@@ -66,11 +66,12 @@ Test on Centos 7, Rocky 8.6
 ## Clean up
 
 Remove under files
-1. /etc/udev/rules.d/25-vfio-pci-bind.rules
-2. /lib/udev/vfio-pci-bind.sh
-3. /etc/modprobe.d/vfio.conf
-4. /etc/modules-load.d/vfio-pci.conf
-
+```bash
+rm -rf /etc/udev/rules.d/25-vfio-pci-bind.rules
+rm -rf /lib/udev/vfio-pci-bind.sh
+rm -rf /etc/modprobe.d/vfio.conf
+rm -rf /etc/modules-load.d/vfio-pci.conf
+```
 ## License
 
 See supplied LICENSE file.
