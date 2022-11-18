@@ -35,7 +35,7 @@ if [[ $COUNT -eq 0 ]]; then
   exit 1
 fi
 
-list=$(lspci -n -d 10de: | cut -d ":" -f4)
+list=$(lspci -n -d 10de: | cut -d ":" -f4 | cut -d " " -f1)
 
 unset product
 for var in ${list}
