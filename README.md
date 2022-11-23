@@ -63,15 +63,14 @@ Test on Centos 7, Rocky 8.6
 1. Copy set-bind.sh, vfio-pci-bind.sh, 25-vfio-pci-bind.rules.empty in same directory
 2. Make set-bind.sh executable and run.
 
+## set-grub.sh
+
+Set grub.cfg automatically when you use UEFI boot OS, just type your os
+
 ## Clean up
 
-Remove under files
-```bash
-rm -rf /etc/udev/rules.d/25-vfio-pci-bind.rules
-rm -rf /lib/udev/vfio-pci-bind.sh
-rm -rf /etc/modprobe.d/vfio.conf
-rm -rf /etc/modules-load.d/vfio-pci.conf
-```
+Run reset.sh
+
 ## License
 
 See supplied LICENSE file.
