@@ -66,6 +66,8 @@ Test on Centos 7, Rocky 8.6
 ## set-grub.sh
 
 Set grub.cfg automatically when you use UEFI boot OS, just type your os
+**Before reboot please check your grub file again**
+cat /etc/default/grub
 
 ## Clean up
 
