@@ -7,6 +7,11 @@ cp /etc/default/grub /etc/default/grub.backup
 CMDLINE=$(cat /etc/default/grub | grep "GRUB_CMDLINE_LINUX")
 NEWLINE=$(echo "${CMDLINE::-1}" intel_iommu=on iommu=pt rd.driver.blacklist=nouveau\")
 
+if [[ $CMDLINE == */*  ]]; then
+  CMDLINE=$(echo $CMDLINE | sed 's/\//\\\//g')
+  NEWLINE=$(echo $NEWLINE | sed 's/\//\\\//g')
+fi
+
 sed 's/'"${CMDLINE}"'/'"${NEWLINE}"'/g' /etc/default/grub.backup > /etc/default/grub
 
 ##
